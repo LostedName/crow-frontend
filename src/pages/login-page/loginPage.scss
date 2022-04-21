@@ -1,4 +1,30 @@
+@import '../../styles/templates.scss';
+
 main{
-  width: 100%;
-  height: 10rem;
+  @extend %base-main;
+  .login_form {
+    @extend %base-form;
+    h1 {
+      font-size: 2rem;
+      margin-bottom: .7rem;
+    }
+    a {
+      @extend %link-style;
+      margin-bottom: .6rem;
+    }
+    .container:last-of-type{
+      margin-bottom: .6rem;
+    }
+    button {
+      @extend %form-btn;
+    }
+  }
+  .botton-phrase{
+    padding-top: 1.5rem;
+    font-size: 1.1rem;
+    a{
+      @extend %link-style;
+      margin-left: .1rem;
+    }
+  }
 }

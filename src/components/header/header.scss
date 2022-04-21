@@ -4,21 +4,28 @@ header {
   justify-content: space-between;
   width: 100%;
   height: 5rem;
-  background-color: rgb(245, 252, 251);
+  background-color: #fff;
   border-bottom: 1px solid #c4c4c480;
-  .logo {
+  .leftside {
     display: flex;
     align-items: center;
-    margin-left: 1.5rem;
-    img {
-      height: 3rem;
-      width: 3rem;
-    }
-    span {
-      margin-left: .3rem;
-      font-size: 2rem;
-    }
+    .logo {
+      display: flex;
+      align-items: center;
+      margin: 0 2rem;
+      &:focus-visible{
+        outline: 1px solid #08529c2d;
+      }
+      img {
+        height: 3rem;
+        width: 3rem;
+      }
+      span {
+        margin-left: .3rem;
+        font-size: 2rem;
+      }
   }
+}
 
   div{
     display: flex;
@@ -32,18 +39,25 @@ header {
       height: 3rem;
       width: 7.3rem;
       margin-left: 1.3rem;
-      &:focus {
+      transition: all .1s ease;
+      &:focus-visible {
         outline: 2px solid rgba(104, 40, 206, 0.514);
       }
     }
     .login_btn{
       color: #415eef9c;
       background: rgba(208, 208, 208, .51);
+      position: relative;
+      &:hover {
+        background: rgba(208, 208, 208, .7);
+      }
     }
     .register_btn{
       color: #fff;
       background: linear-gradient(180deg, rgba(178, 142, 252, .8) 10%, rgba(65, 93, 239, .8));
-      box-shadow: 0 .2rem 5px 2px #0003;
+      &:hover {
+        background: linear-gradient(180deg, rgba(178, 142, 252, .9) 10%, rgba(65, 93, 239, .9));
+      }
     }
   }
 }
