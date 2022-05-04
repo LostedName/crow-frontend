@@ -1,7 +1,25 @@
-import { AboutPage, LoginPage, MainPage, PrivacyPage, RegisterPage, TermsPage } from "./pages";
+import { AboutPage, FollowsPage, LoginPage, MainPage, MustLoginPage, NotFoundPage, PrivacyPage, ProfilePage, RegisterPage, SearchPage, SettingsPage, TermsPage, UserProfilePage } from "./pages";
 import { ElementRoutes } from "./types/routes";
 
-const routes: ElementRoutes = [
+const loggedRoutes: ElementRoutes = [
+    {
+        path:"/profile",
+        element: ProfilePage, 
+    },
+    {
+        path:"/profile/:userId",
+        element: UserProfilePage,
+    },
+    {
+        path:"/follows",
+        element: FollowsPage, 
+    },
+    {
+        path:"/settings",
+        element: SettingsPage, 
+    },
+];
+const unloggedRoutes: ElementRoutes = [
     {
         path:"/registration",
         element: RegisterPage,
@@ -10,6 +28,24 @@ const routes: ElementRoutes = [
         path:"/login",
         element: LoginPage,
     },
+    {
+        path:"/profile",
+        element: MustLoginPage, 
+    },
+    {
+        path:"/profile/:userId",
+        element: MustLoginPage, 
+    },
+    {
+        path:"/follows",
+        element: MustLoginPage,
+    },
+    {
+        path:"/settings",
+        element: MustLoginPage,
+    },
+];
+const defaultRoutes: ElementRoutes = [
     {
         path:"/about",
         element: AboutPage, 
@@ -23,9 +59,17 @@ const routes: ElementRoutes = [
         element: TermsPage, 
     },
     {
+        path:"/search",
+        element: SearchPage,
+    },
+    {
         path:"/",
         element: MainPage, 
     },
+    {
+        path:"/*",
+        element: NotFoundPage, 
+    },
 ];
 
-export default routes;
+export {defaultRoutes, unloggedRoutes, loggedRoutes};

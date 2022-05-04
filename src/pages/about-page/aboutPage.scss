@@ -1,5 +1,4 @@
-@import '../../styles/templates.scss';
-
-main{
-  @extend %base-main;
+@use '../../scss' as *;
+main.about_page{
+  @include base-main;
 }

@@ -1,24 +1,27 @@
-@import '../../styles/templates.scss';
+@use '../../scss' as *;
 
-main{
-  @extend %base-main;
+main.register_page{
+  @include base-main;
   .reg_form {
-    @extend %base-form;
-    width: 25rem;
+    @include base-form(25rem);
     h1 {
       font-size: 2rem;
       margin-bottom: .7rem;
     }
 
     button {
-      @extend %form-btn;
+      @include form-btn;
     }
   }
-  .botton-phrase{
-    padding-top: 1.5rem;
+  .bottom-phrase{
     font-size: 1.1rem;
+    margin-top: 1.5rem;
+    background-color: #fff;
+    @include shadow;
+    border-radius: 1rem;
+    padding: .5rem 1rem;
     a{
-      @extend %link-style;
+      @include link-style;
       margin-left: .1rem;
     }
   }

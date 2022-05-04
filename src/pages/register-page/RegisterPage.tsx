@@ -5,7 +5,7 @@ import './registerPage.scss';
 
 const RegisterPage: FC = () => {
   return (
-    <main>
+    <main className="register_page">
       <form className='reg_form'>
         <h1>Sign Up</h1>
         <FloatInput label="Email" />
@@ -13,7 +13,7 @@ const RegisterPage: FC = () => {
         <FloatInput label="Password" type="password" />
         <button>Sign up</button>
       </form>
-      <div className="botton-phrase">
+      <div className="bottom-phrase">
         Already have an account? <Link to="/login">Log in</Link>
       </div>
     </main>

@@ -1,5 +1,5 @@
-@import '../../styles/templates.scss';
+@use '../../scss' as *;
 
-main{
-  @extend %base-main;
+main.terms_page{
+  @include base-main;
 }

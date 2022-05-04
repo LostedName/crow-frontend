@@ -1,6 +1,6 @@
 @use '../../scss' as *;
 
-main.login_page {
+main.mustlogin_page {
   @include base-main;
   .login_form {
     @include base-form(21rem);
