@@ -4,6 +4,8 @@
 @mixin base-main ($style: flex) {
     width: 100%;
     min-height: calc(100vh - 5rem - 3.75rem);
+    background-image: url("../../public/assets/crowBackground.png");
+    background-size: 50%;
     @if ($style == flex) {
         display: flex;
         flex-direction: column;
@@ -14,6 +16,16 @@
         display: grid;
         grid-template-columns: 30% 40% 30%;
     }
+}
+@mixin base-main-admin($withHeader: "true", $style: flex) {
+  @include base-main($style);
+  @if ($withHeader == "true") {
+    background-image: none;
+    min-height: calc(100vh - 5rem);
+  }
+  @else {
+    min-height: calc(100vh);
+  }
 }
 @mixin display-flex($flex-dir: row, $justify-content: normal, $align-items: normal) {
   display: flex;

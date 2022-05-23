@@ -1,21 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { InputChangeHandler } from '../../../types/types';
 import './floatInput.scss';
 
+
+
 type Input = {
+  value: string,
+  onChange: InputChangeHandler,
   label: string,
   type?: string,
+  isFilled?: boolean,
 }
-type InputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
-const FloatInput: React.FC<Input> = ({label, type = "text"}) => {
+const FloatInput: React.FC<Input> = ({value, onChange, label, type = "text", isFilled = true}) => {
     
-    const [data, setData] = useState<string>("");
-    const changeHandler: InputChangeHandler = (e) => setData(e.target.value);
-
   return (
-    <div className='container'>
-        <label htmlFor={`${label}_float_input`} className={data ? "active" : ""}>{label}</label>
-        <input id={`${label}_float_input`} value={data} onChange={changeHandler} type={type} />
+    <div className={`container ${!isFilled ? "not_filled" : ""}`}>
+        <label htmlFor={`${label}_float_input`} className={`${value ? "active" : ""} ${!isFilled ? "not_filled" : ""}`}>{label}</label>
+        <input id={`${label}_float_input`} value={value} onChange={onChange} type={type} />
     </div>
   );
 }

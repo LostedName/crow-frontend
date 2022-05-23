@@ -1,23 +1,30 @@
 export enum UserActionTypes {
-    LOGIN_USER="LOGIN_USER",
+    SET_USER_DATA="SET_USER_DATA",
     LOGOUT_USER="LOGOUT_USER",
+    SET_APP_LOADING="SET_APP_LOADING",
 }
 
-export interface LoginUserAction {
-    type: UserActionTypes.LOGIN_USER;
+export interface SetUserDataAction {
+    type: UserActionTypes.SET_USER_DATA;
+    payload: UserType;
 }
 
 export interface LogoutUserAction {
     type: UserActionTypes.LOGOUT_USER;
 }
 
-export type UserAction = LoginUserAction | LogoutUserAction;
+export interface AppLoadingAction {
+    type: UserActionTypes.SET_APP_LOADING,
+    payload: boolean,
+}
+
+export type UserAction = SetUserDataAction | LogoutUserAction | AppLoadingAction;
 
 export type UserType = {
     id: number,
     avatar?: string,
     profileCover?: string,
-    login: string,
+    email: string,
     name: string,
     description: string,
     country?: string,
@@ -27,6 +34,7 @@ export type UserType = {
 }
 
 export interface UserState {
+    isAppLoading: boolean;
     isAuth: boolean;
     user: UserType | null;
     foreignUser?: UserType | null;

@@ -1,5 +1,9 @@
 import * as userActions from './user';
-
-export default {
-    ...userActions,
-}
+import * as adminActions from './admin';
+import * as postsAction from './post';
+const actions = {
+  ...userActions,
+  ...adminActions,
+  ...postsAction,
+};
+export default actions;

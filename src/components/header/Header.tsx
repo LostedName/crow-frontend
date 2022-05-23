@@ -7,6 +7,7 @@ import './header.scss';
 
 const Header: React.FC = () => {
   const isAuth = useTypedSelector((state) => state.userStore.isAuth);
+  const user = useTypedSelector((state) => state.userStore.user);
   const {logoutUser} = useActions();
   const navigate = useNavigate();
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
@@ -35,9 +36,9 @@ const Header: React.FC = () => {
         <SearchBar />
       </div>
       {isAuth ? <div className="header_profile">
-        <img src="/assets/myPhotoSquare.jpg" alt="avatar" />
+        <img src={user?.avatar ?? "/assets/unknown_user.png"} alt="avatar" />
         <span className="profile_name">
-          Dio_karpo
+          {user?.name}
         </span>
         <button onClick={openMenu} className="open_menu">
           <div />

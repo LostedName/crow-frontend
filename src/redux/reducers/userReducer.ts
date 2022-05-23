@@ -1,58 +1,40 @@
+import { deleteAccessToken, deleteRefreshToken } from "../../services/jwt";
 import { UserAction, UserActionTypes, UserState } from "../../types/User";
 
-
-
+// foreignUser {
+//     id: 2,
+//     avatar: "/assets/myPhotoSquare.jpg",
+//     profileCover: "/ass ets/profileCover.jpg",
+//     login: "Dio_karpo",
+//     name: "Dmitry Karpenkin",
+//     description: "В рот всё ебал очень хорошо",
+//     country: "Belarus",
+//     link: "https://vk.com/dikarp118",
+//     birthDate: "28.04.2002",
+//     createdAt: "22.03.2014",
+// }
+ 
 const initialState: UserState = {
-    // isAuth: true,
-    // user: {
-    //     id: 1,
-    //     avatar: "/assets/myPhotoSquare.jpg",
-    //     profileCover: "/assets/profileCover.jpg",
-    //     login: "Dio_karpo",
-    //     name: "Dmitry Karpenkin",
-    //     description: "В рот всё ебал очень хорошо",
-    //     country: "Belarus",
-    //     link: "https://vk.com/dikarp118",
-    //     birthDate: "28.04.2002",
-    //     createdAt: "22.03.2014",
-    // },
-    foreignUser: {
-        id: 2,
-        avatar: "/assets/myPhotoSquare.jpg",
-        profileCover: "/assets/profileCover.jpg",
-        login: "Dio_karpo",
-        name: "Dmitry Karpenkin",
-        description: "В рот всё ебал очень хорошо",
-        country: "Belarus",
-        link: "https://vk.com/dikarp118",
-        birthDate: "28.04.2002",
-        createdAt: "22.03.2014",
-    },
-
+    isAppLoading: true,
     isAuth: false,
     user: null,
+    foreignUser: null,
 };
 
 const userReducer = (state = initialState, action: UserAction): UserState => {
     switch (action.type) {
-        case UserActionTypes.LOGIN_USER:
+        case UserActionTypes.SET_USER_DATA:
             return {
+                ...state,
                 isAuth: true,
-                user: {
-                    id: 1,
-                    avatar: "/assets/myPhotoSquare.jpg",
-                    profileCover: "",
-                    login: "Dio_karpo",
-                    name: "Dmitry Karpenkin",
-                    description: "В рот всё ебал очень хорошо",
-                    country: "Belarus",
-                    link: "https://vk.com/dikarp118",
-                    birthDate: "28.04.2002",
-                    createdAt: "22.03.2014",
-                },
+                user: { ...action.payload },
             };
         case UserActionTypes.LOGOUT_USER:
-            return { ...initialState };
+            deleteAccessToken();
+            deleteRefreshToken();
+            return { ...state, isAuth: false, user: null };
+        case UserActionTypes.SET_APP_LOADING:
+            return {...state, isAppLoading: action.payload};
         default:
             return state;
     }

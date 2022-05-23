@@ -22,7 +22,7 @@ const Post: React.FC<PostProps> = ({
     switch (menuType) {
       case MenuType.none: 
         return (<></>);
-      case MenuType.own: 
+      case MenuType.own:
         return (
           <button onClick={openMenu}>
               <div />
