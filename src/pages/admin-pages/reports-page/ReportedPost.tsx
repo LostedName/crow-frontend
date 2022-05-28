@@ -1,6 +1,7 @@
 import React from 'react';
-import Post from '../../../components/post/Post';
+import { useActions } from '../../../hooks/useActions';
 import { PostProps } from '../../../types/Post';
+import { ButtonClickEvent } from '../../../types/types';
 import './reportedPost.scss';
 
 const ReportedPost: React.FC<PostProps> = ({
@@ -9,10 +10,19 @@ const ReportedPost: React.FC<PostProps> = ({
     avatar,
     text,
     likeCount,
+    reportsCount,
     createdAt,
     menuType,
   }) => {
-
+  const {deletePostAsync, discardReportsAsync} = useActions();
+  const onDeleteClick = (e: ButtonClickEvent) => {
+    e.preventDefault();
+    deletePostAsync(id);
+  }
+  const onDiscardClick = (e: ButtonClickEvent) => {
+    e.preventDefault();
+    discardReportsAsync(id);
+  }
   return (
     <div className="reported-post">
       <div className="rep-post">
@@ -35,13 +45,13 @@ const ReportedPost: React.FC<PostProps> = ({
         </div>
       <div className="info">
         <span>
-          Count of Reports: 253
+          Count of Reports: {reportsCount}
         </span>
         <div className="buttons">
-          <button>
+          <button onClick={onDeleteClick}>
             Delete Post
           </button>
-          <button>
+          <button onClick={onDiscardClick}>
             Discard All Reports
           </button>
         </div>

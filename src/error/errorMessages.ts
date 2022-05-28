@@ -7,7 +7,7 @@ const errorMessages = {
   DEFAULT_MESSAGE: "Произошла непредвиденная ошибка, повторите позже.",
   POST_FIELD_EMPTY: "Пост не может быть пустым.",
   POST_LOAD_ID_EMPTY: "При загрузке постов в запросе не был указан ID пользователя.",
-  TOKEN_EXPIRED: "TOKEN_EXPIRED",
+  REPORT_ALREADY_EXIST: "Вы уже отсылали жалобу на данный пост.",
 };
   export default errorMessages;
   

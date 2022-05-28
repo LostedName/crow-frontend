@@ -29,7 +29,6 @@ const RegisterPage: FC = () => {
   }
   const {status, startTimer} = useValidationTimer();
   const validation: () => boolean = () => {
-    console.log("EMAIL", isFieldFilled(email), isEmailValid(email));
     if (isFieldFilled(email) && isEmailValid(email))
       emailValid.current = true;
     else

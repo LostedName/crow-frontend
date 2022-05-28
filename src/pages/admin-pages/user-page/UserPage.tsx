@@ -59,6 +59,7 @@ const UserPage: FC = () => {
                 avatar="/assets/myPhotoSquare.jpg"
                 text="Все сфы гули гули"
                 likeCount={600}
+                isLiked={true}
                 createdAt="11 minutes ago"
                 menuType={MenuType.own}/>
         </div>

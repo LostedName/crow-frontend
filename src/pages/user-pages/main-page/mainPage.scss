@@ -4,6 +4,13 @@ main.main_page{
   @include base-main(grid);
   .content {
     background: #fff;
+    .circle-loader {
+      @include display-flex(row, center, flex-start);
+      width: 100%;
+      height: 15rem;
+      font-size: 1.3rem;
+      padding: 3rem 0;
+    }
     .content_header {
       @include page-content-header;
       span {

@@ -2,6 +2,10 @@
 
 main.user_profile_page{
   @include base-main(grid);
+  .loading-profile-screen {
+    grid-column: 1/4;
+    background: #fff;
+  }
   .content {
     @include display-flex(column, flex-start, center);
     background-color: #fff;
@@ -106,7 +110,6 @@ main.user_profile_page{
       width: 100%;
       height: 3rem;
       margin-top: 1.5rem;
-      grid-template-columns: 1fr 1fr;
       justify-items: center;
       border-bottom: $border;
       button {
@@ -147,6 +150,18 @@ main.user_profile_page{
     .profile_posts {
       @include display-flex(column);
       width: 100%;
+      .posts-empty {
+        @include display-flex(row, center, flex-start);
+        width: 100%;
+        padding: 2rem;
+        font-size: 1.4rem;
+      }
+      .circle-loader {
+        @include display-flex(row, center, flex-start);
+        width: 100%;
+        height: 15rem;
+        padding: 3rem 0;
+      }
     }
   }
   aside {

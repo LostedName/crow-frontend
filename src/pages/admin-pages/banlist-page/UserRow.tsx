@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { useActions } from '../../../hooks/useActions';
 import { ButtonClickEvent } from '../../../types/types';
 
 type UserRowProps = {
@@ -11,9 +12,10 @@ type UserRowProps = {
 }
 
 const UserRow: React.FC<UserRowProps> = ({userId, name, postsCount, banReason, avatar}) => {
+  const {unbanUserAsync} = useActions();
   const banUserClick = (e: ButtonClickEvent) => {
     e.preventDefault();
-    //BAN USER with userId
+    unbanUserAsync(userId);
   }
   return (
     <div className="table_row">
@@ -22,7 +24,7 @@ const UserRow: React.FC<UserRowProps> = ({userId, name, postsCount, banReason, a
       <span>{postsCount}</span>
       <span>{banReason}</span>
       <div className="row_buttons">
-        <Link to={`/users/${userId}`}>Profile</Link>
+        {/* <Link to={`/users/${userId}`}>Profile</Link> */}
         <button onClick={banUserClick}>UnBan</button>
       </div>
     </div>

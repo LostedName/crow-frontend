@@ -1,4 +1,5 @@
 import { ErrorAction } from "..";
+import { deleteAccessToken, deleteRefreshToken } from "../../services/jwt";
 import { Notify } from "../../services/toast";
 import errorMessages from "../errorMessages";
 import statuses from "../errorStatuses";
@@ -15,6 +16,14 @@ export const userAlreadyExistAction: ErrorAction = (status, statusCode) => {
     statusCode === statusCodes.USER_ALREADY_EXIST
   ) {
     Notify.error(errorMessages.USER_ALREADY_EXIST);
+  }
+};
+export const reportAlreadyExistAction: ErrorAction = (status, statusCode) => {
+  if (
+    status === statuses.badRequest &&
+    statusCode === statusCodes.REPORT_ALREADY_EXIST
+  ) {
+    Notify.error(errorMessages.REPORT_ALREADY_EXIST);
   }
 };
 
@@ -49,6 +58,8 @@ export const refreshBadTokenAction: ErrorAction = (status, statusCode) => {
     (status === statuses.forbidden && statusCode === statusCodes.WRONG_ROLE) ||
     (status === statuses.notFound && statusCode === statusCodes.USER_NOT_FOUND)
   ) {
+    deleteAccessToken();
+    deleteRefreshToken();
     Notify.error(errorMessages.MUST_LOGIN_AGAIN);
   }
 };

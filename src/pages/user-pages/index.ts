@@ -11,6 +11,7 @@ import SearchPage from "./search-page/SearchPage";
 import FollowsPage from "./follows-page/FollowsPage";
 import MustLoginPage from "./mustlogin-page/MustLoginPage";
 import UserProfilePage from "./userprofile-page/UserProfilePage";
+import SubscribersPage from "./subscribers-page/SubscribersPage";
 export { 
     RegisterPage,
     LoginPage,
@@ -25,4 +26,5 @@ export {
     FollowsPage,
     MustLoginPage,
     UserProfilePage,
+    SubscribersPage,
 };

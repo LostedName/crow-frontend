@@ -33,7 +33,7 @@ const Header: React.FC = () => {
             <img src="/assets/logo_icon.png" alt="gramboo logo" />
             <span>Crow</span>
         </Link>
-        <SearchBar />
+        {/* <SearchBar /> */}
       </div>
       {isAuth ? <div className="header_profile">
         <img src={user?.avatar ?? "/assets/unknown_user.png"} alt="avatar" />
@@ -47,7 +47,8 @@ const Header: React.FC = () => {
           <div className={`profile_menu ${isMenuOpened ? "active" : ""}`}>
             <Link to="/profile">Your profile</Link>
             <Link to="/follows">Your follows</Link>
-            <Link to="/settings">Settings</Link>
+            <Link to="/subscribers">Your subscribers</Link>
+            {/* <Link to="/settings">Settings</Link> */}
           </div>
         </button>
         <button onClick={logoutHandler} className="profile_logout">

@@ -1,46 +1,143 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import CircleLoader from '../../../components/circleLoader/CircleLoader';
+import LoadingScreen from '../../../components/loadingScreen/LoadingScreen';
+import Portal from '../../../components/portal/Portal';
 import Post from '../../../components/post/Post';
+import ReportPostPopup from '../../../components/reportPostPopup/ReportPostPopup';
+import statusCodes from '../../../error/statusCodes';
+import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { getDateTimeFromString } from '../../../services/time';
 import { MenuType } from '../../../types/Post';
 import NotFoundPage from '../notfound-page/NotFoundPage';
 import './userProfilePage.scss';
 
 const UserProfliePage: React.FC = () => {
-  const [isPostsOpened, setIsPostsOpened] = useState<boolean>(true);
-  const mineId = useTypedSelector((state) => state.userStore.user?.id);
-  const foreignUser = useTypedSelector((state) => state.userStore.foreignUser);
-  const setPosts = () => setIsPostsOpened(true); 
-  const setLiked = () => setIsPostsOpened(false);
-  const { userId } = useParams<{[key: string]:string}>();
-  const id = +(userId || 0);
-  const isUserExist = !isNaN(id);
   const navigate = useNavigate();
-  if (mineId === id) {
-    navigate("/profile");
+  const isAuth = useTypedSelector((state) => state.userStore.isAuth);
+  const isPageLoading = useTypedSelector((state) => state.userStore.isPageLoading);
+  const userError = useTypedSelector((state) => state.userStore.userError);
+  const foreignUser = useTypedSelector((state) => state.userStore.foreignUser);
+  const isPostsLoading = useTypedSelector((state) => state.postStore.isPostsLoading);
+  const userPosts = useTypedSelector((state) => state.postStore.userPosts);
+  const {getForeignUserDataAsync, loadUserPosts, setUserError, setUserPosts, unlikePost, likePost, subscribeToUser, unsubscribeFromUser, setForeignUserLoading} = useActions();
+  const setPosts = () => {console.log("POSTS CLICK")}; 
+  const { userId } = useParams<{[key: string]:string}>();
+  const onFollowHandler = () => {
+    if (foreignUser)
+      foreignUser?.isFollowed ? unsubscribeFromUser(foreignUser.id) : subscribeToUser(foreignUser.id);
+  }
+  const [reportPopup, setReportPopup] = useState<boolean>(false);
+  const reportPostIdRef = useRef<number>(-1);
+  const openReportPopup = (postId: number) => {
+    reportPostIdRef.current = postId;
+    setReportPopup(true);
+  }
+  const renderUserPosts = () => (
+    isPostsLoading ? 
+      userPosts.length === 0
+      ? <div className="circle-loader">
+          <CircleLoader />
+      </div>
+      : <>
+        {
+          userPosts.map((post) => (
+          <Post id={post.id}
+            key={post.id}
+            userId={post.userId}
+            userName={foreignUser?.name || ""}
+            avatar={foreignUser?.avatar ?? "/assets/unknown_user.png"}
+            text={post.text}
+            likeCount={post.likesCount}
+            isLiked={post.isLiked}
+            onReportClick={() => openReportPopup(post.id)}
+            onLikeClick={() => {
+              post.isLiked ? unlikePost(post.id, "posts") : likePost(post.id, "posts")
+            }}
+            createdAt={getDateTimeFromString(post.updatedAt)}
+            menuType={MenuType.stranger}/>
+          ))
+        }
+        <div className="circle-loader">
+          <CircleLoader />
+        </div>
+      </>
+    : userPosts.length === 0 ? <div className="posts-empty">User have no posts</div>
+    : userPosts.map((post) => (
+        <Post id={post.id}
+          key={post.id}
+          userId={post.userId}
+          userName={foreignUser?.name || ""}
+          avatar={foreignUser?.avatar ?? "/assets/unknown_user.png"}
+          text={post.text}
+          likeCount={post.likesCount}
+          isLiked={post.isLiked}
+          onReportClick={() => openReportPopup(post.id)}
+          onLikeClick={() => {
+            post.isLiked ? unlikePost(post.id, "posts") : likePost(post.id, "posts")
+          }}
+          createdAt={getDateTimeFromString(post.updatedAt)}
+          menuType={MenuType.stranger}/>
+      ))
+  );
+  
+  useEffect(() => {
+    if (isAuth) {
+      getForeignUserDataAsync(userId ? parseInt(userId) : -1, navigate);
+    }
+    return () => {
+      setUserError("");
+    }
+  }, [isAuth]);
+
+  useEffect(() => {
+    if (foreignUser?.id)
+      loadUserPosts(foreignUser.id, 0);
+    return () => {
+      setUserPosts([]);
+    }
+  }, [foreignUser]);
+
+  if (isPageLoading) {
+    return (
+      <main className="user_profile_page">
+        <div className="loading-profile-screen">
+          <LoadingScreen />
+        </div>
+      </main>
+    );
   }
   return (
-<>
+  <>
     {
-      !isUserExist ? <NotFoundPage />
+      userError === statusCodes.USER_NOT_FOUND ? <NotFoundPage />
       :
     <main className="user_profile_page">
+      <Portal isOpened={reportPopup} closePopup={() => setReportPopup(false)}>
+        <ReportPostPopup postId={reportPostIdRef.current} closePopup={() => setReportPopup(false)} />
+      </Portal>
       <aside className="left-side"></aside>
       <div className="content">
         <div className="content_header">
           <span>Profile</span>
           <div />
           <span>{foreignUser?.name}</span>
-          <div />
-          <span>35 posts</span>
+          {/* <div />
+          <span>35 posts</span> */}
         </div>
         <div className="content_cover">
-          <img src={foreignUser?.profileCover} alt="cover" />
+          <img src={foreignUser?.profileCover ?? "/assets/unknown_cover.jpg"} alt="cover" />
         </div>
         <div className="content_info">
           <div className="content_avatar">
-            <img src="/assets/myPhotoSquare.jpg" alt="avatar" />
-              <button className='foreign_profile_btn followed'>Follow</button>
+            <img src={foreignUser?.avatar ?? "/assets/unknown_user.png"} alt="avatar" />
+              <button
+                onClick={onFollowHandler}  
+                className={`foreign_profile_btn ${foreignUser?.isFollowed ? "followed" : ""}`}
+              >
+                {foreignUser?.isFollowed ? "Unfollow" : "Follow"}
+              </button>
           </div>
           <span className="profile_name">
             {foreignUser?.name}
@@ -49,31 +146,30 @@ const UserProfliePage: React.FC = () => {
             {foreignUser?.description}
           </span>
           <ul>
-            <li><img src="/assets/link.png" alt="link" />https://vk.com/dikarp118</li>
-            <li><img src="/assets/birthday.png" alt="link" />Birth Date: 28.04.2002</li>
-            <li><img src="/assets/calendar.png" alt="link" />Registration Date: 12.05.2012</li>
+            {
+              foreignUser?.link && <li><img src="/assets/link.png" alt="link" />{foreignUser?.link}</li>
+            }
+            {
+              foreignUser?.birthDate && <li><img src="/assets/birthday.png" alt="birth" />Birth Date: {foreignUser?.birthDate}</li>
+            }
+            {
+              foreignUser?.country && <li><img src="/assets/country.png" alt="country" />Country: {foreignUser?.country}</li>
+            }
           </ul>
           <div className="profile_subs">
-            <span>751</span> people you subscribed
+            <span>{foreignUser?.followCount}</span> people this user subscribed
           </div>
           <div className="profile_subs">
-            <span>15k</span> people subscribed to you
+            <span>{foreignUser?.subsCount}</span> people subscribed to this user
           </div>
         </div>
         <div className="profile_sections">
-          <button onClick={setPosts} className={isPostsOpened ? "active" : ""}>Posts</button>
-          <button onClick={setLiked} className={isPostsOpened ? "" : "active"}>Liked</button>
+          <button onClick={setPosts} className="active">Posts</button>
         </div>
         <div className="profile_posts">
-          <Post id={1}
-                key={1} // id
-                userId={1}
-                userName="Dio_karpo"
-                avatar="/assets/myPhotoSquare.jpg"
-                text="Все сфы гули гули"
-                likeCount={600}
-                createdAt="11 minutes ago"
-                menuType={MenuType.stranger}/>
+          {
+            renderUserPosts()
+          }
         </div>
       </div>
       <aside className="right-side"></aside>

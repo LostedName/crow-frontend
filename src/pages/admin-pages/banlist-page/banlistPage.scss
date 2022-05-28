@@ -25,6 +25,13 @@ main.admin_banlist_page{
     .table_body {
       @include display-flex(column);
       padding: .3rem;
+      .circle-loader {
+        @include display-flex(row, center, center);
+        width: 100%;
+        height: 15rem;
+        padding: 3rem 0;
+        font-size: 1.5rem;
+      }
       .table_row {
         width: 100%;
         height: 4rem;

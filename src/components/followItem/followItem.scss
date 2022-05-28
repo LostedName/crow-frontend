@@ -30,7 +30,7 @@
     div {
       @include display-flex(row, start, center);
       margin-bottom: 1.5rem;
-      button {
+      button, a {
         @include display-flex(row, center, center);
         cursor: pointer;
         width: 9rem;

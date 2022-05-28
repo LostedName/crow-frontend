@@ -1,6 +1,8 @@
 import React from 'react';
 import Post from '../../../components/post/Post';
+import { useActions } from '../../../hooks/useActions';
 import { PostProps } from '../../../types/Post';
+import { ButtonClickEvent } from '../../../types/types';
 import './deletedPost.scss';
 
 const DeletedPost: React.FC<PostProps> = ({
@@ -10,9 +12,14 @@ const DeletedPost: React.FC<PostProps> = ({
     text,
     likeCount,
     createdAt,
+    deletedAt,
     menuType,
   }) => {
-
+  const {recoverPostAsync} = useActions();
+  const onRecoverClick = (e: ButtonClickEvent) => {
+    e.preventDefault();
+    recoverPostAsync(id);
+  }
   return (
     <div className="deleted-post">
       <div className="rep-post">
@@ -35,11 +42,11 @@ const DeletedPost: React.FC<PostProps> = ({
         </div>
       <div className="info">
         <span>
-          Deleted 09.05.2022 12:55:21 
+          Deleted {deletedAt}
         </span>
         <div className="buttons">
-          <button>
-            Return Post
+          <button onClick={onRecoverClick}>
+            Recover Post
           </button>
         </div>
       </div>

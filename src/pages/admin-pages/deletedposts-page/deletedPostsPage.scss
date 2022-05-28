@@ -9,7 +9,14 @@ main.admin_deleted_posts_page{
     height: 100%;
     border-left: $border;
     border-right: $border;
-    .content_header{
+    .circle-loader {
+      @include display-flex(row, center, center);
+      width: 100%;
+      height: 15rem;
+      padding: 3rem 0;
+      font-size: 1.5rem;
+    }
+    .content_header {
       @include page-content-header;
       span {
         font-size: 1.1rem;

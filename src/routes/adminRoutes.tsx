@@ -22,10 +22,10 @@ const loggedRoutes: ElementRoutes = [
         path:"/deleted-posts",
         element: DeletedPostsPage, 
     },
-    {
-        path:"/",
-        element: MainPage, 
-    },
+    // {
+    //     path:"/",
+    //     element: MainPage, 
+    // },
 ];
 const unloggedRoutes: ElementRoutes = [
     {

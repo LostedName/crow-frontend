@@ -1,4 +1,5 @@
-import { AboutPage, FollowsPage, LoginPage, MainPage, MustLoginPage, NotFoundPage, PrivacyPage, ProfilePage, RegisterPage, SearchPage, SettingsPage, TermsPage, UserProfilePage } from "../pages/user-pages";
+import { AboutPage, FollowsPage, LoginPage, MainPage, MustLoginPage, NotFoundPage, PrivacyPage, ProfilePage, RegisterPage, SearchPage, SettingsPage, SubscribersPage, TermsPage, UserProfilePage } from "../pages/user-pages";
+import BanPage from "../pages/user-pages/ban-page/BanPage";
 import { ElementRoutes } from "../types/routes";
 
 const loggedRoutes: ElementRoutes = [
@@ -15,8 +16,34 @@ const loggedRoutes: ElementRoutes = [
         element: FollowsPage, 
     },
     {
+        path:"/subscribers",
+        element: SubscribersPage, 
+    },
+    {
         path:"/settings",
         element: SettingsPage, 
+    },
+];
+const bannedRoutes: ElementRoutes = [
+    {
+        path:"/profile",
+        element: BanPage, 
+    },
+    {
+        path:"/profile/:userId",
+        element: BanPage,
+    },
+    {
+        path:"/follows",
+        element: BanPage, 
+    },
+    {
+        path:"/subscribers",
+        element: BanPage, 
+    },
+    {
+        path:"/settings",
+        element: BanPage, 
     },
 ];
 const unloggedRoutes: ElementRoutes = [
@@ -39,6 +66,10 @@ const unloggedRoutes: ElementRoutes = [
     {
         path:"/follows",
         element: MustLoginPage,
+    },
+    {
+        path:"/subscribers",
+        element: MustLoginPage, 
     },
     {
         path:"/settings",
@@ -72,4 +103,4 @@ const defaultRoutes: ElementRoutes = [
     },
 ];
 
-export {defaultRoutes, unloggedRoutes, loggedRoutes};
+export {defaultRoutes, unloggedRoutes, loggedRoutes, bannedRoutes};

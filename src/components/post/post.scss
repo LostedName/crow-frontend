@@ -8,12 +8,14 @@
     border-bottom: $border;
     padding: 1rem;
     padding-bottom: .3rem;
-    &>img {
-      @include avatar_image;
-      width: 80%;
-      grid-column: 1/2;
-      grid-row: 1/4;
-      justify-self: center;
+    &>a {
+      img {
+        @include avatar_image;
+        width: 80%;
+        grid-column: 1/2;
+        grid-row: 1/4;
+        justify-self: center;
+      }
     }
     .post_header {
       @include display-flex(row, space-between, center);
@@ -23,6 +25,10 @@
       height: 100%;
       .post_header_name {
         @include display-flex(row, flex-start, center);
+        &>a {
+          color: $gray-color;
+          padding-bottom: .2rem;
+        }
         span {
           color: $gray-color;
           padding-bottom: .2rem;

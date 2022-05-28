@@ -16,7 +16,7 @@ const AdminHeader: React.FC = () => {
   return (
     <header className="admin_header">
       <div className="leftside">
-        <Link className="logo" to="/">
+        <Link className="logo" to="/users">
             <img src="/assets/logo_icon.png" alt="gramboo logo" />
             <span>Crow</span>
         </Link>
