@@ -28,8 +28,8 @@ jobs:
       - name: Build Frontend
         run: |
           cd ./frontend
-          ls > echo
-          npm ci
+          npm cache clean --force
+          npm сi
           npm run build
 
       - name: Prepare Remote Private Key
