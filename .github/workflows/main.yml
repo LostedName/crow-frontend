@@ -1,0 +1,43 @@
+name: STAGING - Build and Deploy Front
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-build-publish-deploy:
+    timeout-minutes: 45
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Frontend
+        uses: actions/checkout@v2
+        with:
+          repository: LostedName/crow-frontend
+          ref: 'main'
+          path: './frontend'
+          token: ${{secrets.GIT_REPO_TOKEN}}
+
+      - name: Build Frontend
+        run: |
+          cd ./frontend
+          npm run build
+
+      - name: Prepare Remote Private Key
+        env:
+          REMOTE_PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
+        run: |
+          echo "$REMOTE_PRIVATE_KEY" > private_key && chmod 600 private_key
+
+      - name: Deploy
+        env:
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USERNAME: ${{ secrets.REMOTE_USERNAME }}
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key ${REMOTE_USERNAME}@${REMOTE_HOST} '
+            rm -r ./TestDeploy/
+            mkdir ./TestDeploy/
+          '
+
+          scp -o StrictHostKeyChecking=no -i private_key ./frontend/build ${REMOTE_USERNAME}@${REMOTE_HOST}:./TestDeploy/
