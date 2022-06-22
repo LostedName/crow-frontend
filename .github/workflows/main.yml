@@ -10,6 +10,9 @@ jobs:
     timeout-minutes: 45
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [12]
     steps:
       - name: Checkout Frontend
         uses: actions/checkout@v2
@@ -18,11 +21,12 @@ jobs:
           ref: 'main'
           path: './frontend'
           token: ${{secrets.GIT_REPO_TOKEN}}
-
+      - name: Use Node.Js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
       - name: Build Frontend
         run: |
-          cd ./frontend
-          ls
           npm ci
           npm run build
 
