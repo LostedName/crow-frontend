@@ -28,8 +28,7 @@ jobs:
       - name: Build Frontend
         run: |
           cd ./frontend
-          npm cache verify
-          npm сi
+          npm i
           npm run build
 
       - name: Prepare Remote Private Key
