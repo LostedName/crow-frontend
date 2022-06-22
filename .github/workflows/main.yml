@@ -28,7 +28,7 @@ jobs:
       - name: Build Frontend
         run: |
           cd ./frontend
-          npm cache clean
+          npm cache verify
           npm сi
           npm run build
 
