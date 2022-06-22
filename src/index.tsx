@@ -7,7 +7,7 @@ import UserApp from './UserApp';
 import AdminApp from './AdminApp';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import './styles/app.scss';
+import './app.scss';
 
 const Application = () => {
   const subdomain = window.location.host.split(".")[0];
