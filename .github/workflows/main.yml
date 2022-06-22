@@ -50,4 +50,4 @@ jobs:
             mkdir ./TestDeploy/
           '
 
-          scp -o StrictHostKeyChecking=no -i private_key ./frontend/build/ ${REMOTE_USERNAME}@${REMOTE_HOST}:./TestDeploy/
+          scp -o StrictHostKeyChecking=no -i private_key -r ./frontend/build/ ${REMOTE_USERNAME}@${REMOTE_HOST}:./TestDeploy/
