@@ -27,6 +27,8 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Build Frontend
         run: |
+          cd ./frontend
+          ls > echo
           npm ci
           npm run build
 
