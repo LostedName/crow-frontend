@@ -22,6 +22,7 @@ jobs:
       - name: Build Frontend
         run: |
           cd ./frontend
+          ls
           npm ci
           npm run build
 
