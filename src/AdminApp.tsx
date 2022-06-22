@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useTypedSelector } from './hooks/useTypedSelector';
 import {defaultRoutes, unloggedRoutes, loggedRoutes} from './routes/adminRoutes';
-import './styles/app.scss';
 import AdminHeader from './components/adminHeader/AdminHeader';
 import LoadingScreen from './components/loadingScreen/LoadingScreen';
 import { useActions } from './hooks/useActions';

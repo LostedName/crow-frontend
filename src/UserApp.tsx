@@ -4,7 +4,6 @@ import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import { useTypedSelector } from './hooks/useTypedSelector';
 import {defaultRoutes, unloggedRoutes, loggedRoutes, bannedRoutes} from './routes/userRoutes';
-import './styles/app.scss';
 import { useActions } from './hooks/useActions';
 import LoadingScreen from './components/loadingScreen/LoadingScreen';
 

@@ -3,7 +3,7 @@ import { NavigateFunction } from "react-router-dom";
 import errorCoverage, { refreshAdminTokenCoverage } from "../../error";
 import { internalErrorAction, loginBadRequestAction, loginEmptyFieldsAction, loginNotFoundAction, refreshBadTokenAction } from "../../error/actions/admin";
 import { adminService } from "../../services/admin";
-import { getRefreshToken, setAccessToken, setRefreshToken } from "../../services/jwt";
+import { deleteAccessToken, deleteRefreshToken, getRefreshToken, setAccessToken, setRefreshToken } from "../../services/jwt";
 import { Notify } from "../../services/toast";
 import { AdminActionTypes } from "../../types/Admin";
 import { AppThunk } from "../store";
@@ -208,6 +208,8 @@ export const refreshAdminTokenAsync = (): AppThunk<void> => async () => {
       setRefreshToken(refreshToken);
     }
   } catch (err) {
+    deleteAccessToken();
+    deleteRefreshToken();
     errorCoverage(err, [refreshBadTokenAction, internalErrorAction]);
   }
 }

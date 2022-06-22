@@ -4,7 +4,7 @@ import errorCoverage, { refreshTokenCoverage } from '../../error';
 import { internalErrorAction, loginBadRequestAction, loginEmptyFieldsAction, loginNotFoundAction, refreshBadTokenAction, reportAlreadyExistAction, userAlreadyExistAction } from '../../error/actions/user';
 import statusCodes from '../../error/statusCodes';
 import statuses from '../../error/errorStatuses';
-import { getRefreshToken, setAccessToken, setRefreshToken } from '../../services/jwt';
+import { deleteAccessToken, deleteRefreshToken, getRefreshToken, setAccessToken, setRefreshToken } from '../../services/jwt';
 import { Notify } from '../../services/toast';
 import { userService } from '../../services/user';
 import { AppThunk } from '../store';
@@ -256,6 +256,8 @@ export const refreshTokenAsync = (): AppThunk<void> => async () => {
       setRefreshToken(refreshToken);
     }
   } catch (err) {
+    deleteAccessToken();
+    deleteRefreshToken();
     errorCoverage(err, [refreshBadTokenAction, internalErrorAction]);
   }
 }
